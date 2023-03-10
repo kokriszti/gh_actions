@@ -42,6 +42,9 @@ jobs:
       - name: docker-tag
         run:
           docker tag github-actions-test:v1 kokriszti/github-actions-test:v1
+      - name: docker-push
+        run:
+          docker push kokriszti/github-actions-test:v1
 
 
 
