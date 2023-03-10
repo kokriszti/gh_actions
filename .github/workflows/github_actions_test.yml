@@ -31,20 +31,17 @@ jobs:
       - name: Build with Maven
         run: mvn -B package
       - name: docker-login
-        env:
-          DOCKER_USER: ${{secrets.DOCKER_USER}}
-          DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
         run:
           echo "${{secrets.DOCKER_PASSWORD}}" | docker login --username ${{secrets.DOCKER_USER}} --password-stdin
       - name: docker-build
         run:
-          docker build -t github-actions-test:v1 .
+          docker build -t github-actions-test:v2 .
       - name: docker-tag
         run:
-          docker tag github-actions-test:v1 kokriszti/github-actions-test:v1
+          docker tag github-actions-test:v2 kokriszti/github-actions-test:v2
       - name: docker-push
         run:
-          docker push kokriszti/github-actions-test:v1
+          docker push kokriszti/github-actions-test:v2
 
 
 
