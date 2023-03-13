@@ -38,7 +38,7 @@ jobs:
           echo "$DOCKER_PASSWORD" | docker login --username $DOCKER_USER --password-stdin
       - name: docker-build
         run:
-          docker build --build-arg JAR_PATH=target -t github-actions-test:v2 .
+          docker build -t github-actions-test:v2 .
       - name: docker-tag
         run:
           docker tag github-actions-test:v2 kokriszti/github-actions-test:v2
