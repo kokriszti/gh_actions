@@ -44,14 +44,14 @@ jobs:
           echo "$DOCKER_PASSWORD" | docker login --username $DOCKER_USER --password-stdin
       - name: docker-build
         run:
-          docker build --build-arg JAR_PATH=target -t github-actions-test:v2 .
+          docker build --build-arg JAR_PATH=target -t github-actions-test:${{ steps.define-next-version.outputs.NEXT_VERSION }} .
       - name: docker-tag
         run: |
           echo "The next tag is: ${{ steps.define-next-version.outputs.NEXT_VERSION }}"
-          docker tag github-actions-test:v2 kokriszti/github-actions-test:v2
+          docker tag github-actions-test:${{ steps.define-next-version.outputs.NEXT_VERSION }} kokriszti/github-actions-test:${{ steps.define-next-version.outputs.NEXT_VERSION }}
       - name: docker-push
         run:
-          docker push kokriszti/github-actions-test:v2
+          docker push kokriszti/github-actions-test:${{ steps.define-next-version.outputs.NEXT_VERSION }}
 
 
 
