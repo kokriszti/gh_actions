@@ -72,5 +72,5 @@ else
   echo "No matching tag found -> defaulting to patch zero: $newTag"
 fi
 
-#git tag $newTag
-#git push origin $newTag
+git tag $newTag
+git push origin $newTag
