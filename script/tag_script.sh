@@ -56,7 +56,7 @@ majorFromGit=$(echo $highestGitTag | cut -d"." -f1)
 minorFromGit=$(echo $highestGitTag | cut -d"." -f2)
 patchFromGit=$(echo $highestGitTag | cut -d"." -f3)
 
-versionFromFile=$(cat ../version.txt)
+versionFromFile=$(cat version.txt)
 
 majorFromFile=$(echo $versionFromFile | cut -d"." -f1)
 minorFromFile=$(echo $versionFromFile | cut -d"." -f2)
