@@ -47,8 +47,8 @@ jobs:
           docker push kokriszti/github-actions-test:v2
       - name: git-tag
         run: |
-          chmod +x ./script/tag_script.sh
-          ./script/tag_script.sh
+          chmod +x tag_script.sh
+          ./tag_script.sh
         shell: bash
 
 
