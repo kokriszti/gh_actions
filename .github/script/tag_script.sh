@@ -75,3 +75,5 @@ fi
 #git tag $newTag
 ##TODO: ha tag sikeres a runner-en, de push elhasal?
 #git push origin $newTag
+
+echo "NEXT_VERSION=$newTag" >> $GITHUB_OUTPUT
