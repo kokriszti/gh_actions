@@ -1,0 +1,12 @@
+name: Test manually triggered workflow
+on: workflow_dispatch
+
+jobs:
+  echo:
+    runs-on: ubuntu-latest
+    steps:
+      - name: echo it works
+        id: echo-it-works
+        run: |
+          echo "manually triggered workflow works"
+        shell: bash
