@@ -30,6 +30,7 @@ jobs:
         with:
           # Disabling shallow clone to improve relevancy of sonar reporting
           fetch-depth: 0
+          path: outer-folder/inner-folder
       - name: Print path
         run: |
           pwd
