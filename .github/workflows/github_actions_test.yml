@@ -30,7 +30,7 @@ jobs:
         with:
           # Disabling shallow clone to improve relevancy of sonar reporting
           fetch-depth: 0
-          path: outer-folder/inner-folder
+          path: main
       - name: Print path
         run: |
           pwd
@@ -42,13 +42,10 @@ jobs:
           distribution: 'temurin'
           cache: maven
       - name: Build with Maven
-        run: |
-          cd outer-folder/inner-folder
-          mvn -B package
+        run: mvn -B package
       - name: define-next-version
         id: define-next-version
         run: |
-          pwd
           chmod +x .github/script/tag_script.sh
           ./.github/script/tag_script.sh
         shell: bash
