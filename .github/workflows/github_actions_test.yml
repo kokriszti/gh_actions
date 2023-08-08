@@ -30,7 +30,16 @@ jobs:
         with:
           # Disabling shallow clone to improve relevancy of sonar reporting
           fetch-depth: 0
-      - name: Print path
+      - name: Print path after primary repo checkout
+        run: |
+          pwd
+          ls -la
+      - name: Checkout other repo
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          repository: kokriszti/git_gyak
+      - name: Print path after second repo checkout
         run: |
           pwd
           ls -la
@@ -42,28 +51,28 @@ jobs:
           cache: maven
       - name: Build with Maven
         run: mvn -B package
-      - name: define-next-version
-        id: define-next-version
-        run: |
-          chmod +x .github/script/tag_script.sh
-          ./.github/script/tag_script.sh
-        shell: bash
-      - name: docker-login
-        env:
-          DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
-          DOCKER_USER: ${{secrets.DOCKER_USER}}
-        run:
-          echo "$DOCKER_PASSWORD" | docker login --username $DOCKER_USER --password-stdin
-      - name: docker-build
-        run:
-          docker build --build-arg JAR_PATH=target -t github-actions-test:${{ steps.define-next-version.outputs.NEXT_VERSION }} .
-      - name: docker-tag
-        run: |
-          echo "The next tag is: ${{ steps.define-next-version.outputs.NEXT_VERSION }}"
-          docker tag github-actions-test:${{ steps.define-next-version.outputs.NEXT_VERSION }} kokriszti/github-actions-test:${{ steps.define-next-version.outputs.NEXT_VERSION }}
-      - name: docker-push
-        run:
-          docker push kokriszti/github-actions-test:${{ steps.define-next-version.outputs.NEXT_VERSION }}
+#      - name: define-next-version
+#        id: define-next-version
+#        run: |
+#          chmod +x .github/script/tag_script.sh
+#          ./.github/script/tag_script.sh
+#        shell: bash
+#      - name: docker-login
+#        env:
+#          DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
+#          DOCKER_USER: ${{secrets.DOCKER_USER}}
+#        run:
+#          echo "$DOCKER_PASSWORD" | docker login --username $DOCKER_USER --password-stdin
+#      - name: docker-build
+#        run:
+#          docker build --build-arg JAR_PATH=target -t github-actions-test:${{ steps.define-next-version.outputs.NEXT_VERSION }} .
+#      - name: docker-tag
+#        run: |
+#          echo "The next tag is: ${{ steps.define-next-version.outputs.NEXT_VERSION }}"
+#          docker tag github-actions-test:${{ steps.define-next-version.outputs.NEXT_VERSION }} kokriszti/github-actions-test:${{ steps.define-next-version.outputs.NEXT_VERSION }}
+#      - name: docker-push
+#        run:
+#          docker push kokriszti/github-actions-test:${{ steps.define-next-version.outputs.NEXT_VERSION }}
 
 
 
