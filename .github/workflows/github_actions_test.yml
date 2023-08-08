@@ -39,6 +39,7 @@ jobs:
         with:
           fetch-depth: 0
           repository: kokriszti/git_gyak
+          path: folder-for-second-repo
       - name: Print path after second repo checkout
         run: |
           pwd
