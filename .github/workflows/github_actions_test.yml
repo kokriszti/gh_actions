@@ -16,10 +16,11 @@ on:
 jobs:
   supposed-to-fail:
     runs-on: ubuntu-latest
+    continue-on-error: true
     steps:
       - name: step-should-fail
         run: |
-          echo "This job is supposed to fai."
+          echo "This job is supposed to fail but workflow run should still be successful."
           dksjfhkd
   docker:
     runs-on: ubuntu-latest
