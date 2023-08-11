@@ -22,28 +22,27 @@ jobs:
         run: |
           echo "This job is supposed to fail but workflow run should still be successful."
           dksjfhkd
-  docker:
+  test:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3
         with:
-          # Disabling shallow clone to improve relevancy of sonar reporting
           fetch-depth: 0
-#      - name: Print path after primary repo checkout
-#        run: |
-#          pwd
-#          ls -la
-#      - name: Checkout other repo
-#        uses: actions/checkout@v3
-#        with:
-#          fetch-depth: 0
-#          repository: kokriszti/git_gyak
-#          path: folder-for-second-repo
-#      - name: Print path after second repo checkout
-#        run: |
-#          cd folder-for-second-repo
-#          ls -la
+      #      - name: Print path after primary repo checkout
+      #        run: |
+      #          pwd
+      #          ls -la
+      #      - name: Checkout other repo
+      #        uses: actions/checkout@v3
+      #        with:
+      #          fetch-depth: 0
+      #          repository: kokriszti/git_gyak
+      #          path: folder-for-second-repo
+      #      - name: Print path after second repo checkout
+      #        run: |
+      #          cd folder-for-second-repo
+      #          ls -la
       - name: Set up JDK 11
         uses: actions/setup-java@v3
         with:
@@ -52,37 +51,54 @@ jobs:
           cache: maven
       - name: Run tests
         run: mvn test
-#      - name: Build with Maven
-#        run: mvn -B package
-#      - name: define-next-version
-#        id: define-next-version
-#        run: |
-#          chmod +x .github/script/tag_script.sh
-#          ./.github/script/tag_script.sh
-#        shell: bash
-#      - name: docker-login
-#        env:
-#          DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
-#          DOCKER_USER: ${{secrets.DOCKER_USER}}
-#        run:
-#          echo "$DOCKER_PASSWORD" | docker login --username $DOCKER_USER --password-stdin
-#      - name: docker-build
-#        run:
-#          docker build --build-arg JAR_PATH=target -t github-actions-test:${{ steps.define-next-version.outputs.NEXT_VERSION }} .
-#      - name: docker-tag
-#        run: |
-#          echo "The next tag is: ${{ steps.define-next-version.outputs.NEXT_VERSION }}"
-#          docker tag github-actions-test:${{ steps.define-next-version.outputs.NEXT_VERSION }} kokriszti/github-actions-test:${{ steps.define-next-version.outputs.NEXT_VERSION }}
-#      - name: docker-push
-#        run:
-#          docker push kokriszti/github-actions-test:${{ steps.define-next-version.outputs.NEXT_VERSION }}
+      #      - name: Build with Maven
+      #        run: mvn -B package
       - name: Generate list using Markdown
         run: |
           echo "This is the lead in sentence for the list" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY # this is a blank line
           echo "- Lets add a bullet point" >> $GITHUB_STEP_SUMMARY
           echo "- Lets add a second bullet point" >> $GITHUB_STEP_SUMMARY
-          echo "- How about a third one?" >> $GITHUB_STEP_SUMMARY          
+          echo "- How about a third one?" >> $GITHUB_STEP_SUMMARY
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          # Disabling shallow clone to improve relevancy of sonar reporting
+          fetch-depth: 0
+
+      - name: Set up JDK 11
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+          cache: maven
+      - name: Build with Maven
+        run: mvn -B package
+      - name: define-next-version
+        id: define-next-version
+        run: |
+          chmod +x .github/script/tag_script.sh
+          ./.github/script/tag_script.sh
+        shell: bash
+      - name: docker-login
+        env:
+          DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
+          DOCKER_USER: ${{secrets.DOCKER_USER}}
+        run:
+          echo "$DOCKER_PASSWORD" | docker login --username $DOCKER_USER --password-stdin
+      - name: docker-build
+        run:
+          docker build --build-arg JAR_PATH=target -t github-actions-test:${{ steps.define-next-version.outputs.NEXT_VERSION }} .
+      - name: docker-tag
+        run: |
+          echo "The next tag is: ${{ steps.define-next-version.outputs.NEXT_VERSION }}"
+          docker tag github-actions-test:${{ steps.define-next-version.outputs.NEXT_VERSION }} kokriszti/github-actions-test:${{ steps.define-next-version.outputs.NEXT_VERSION }}
+      - name: docker-push
+        run:
+          docker push kokriszti/github-actions-test:${{ steps.define-next-version.outputs.NEXT_VERSION }}
 
 
 
