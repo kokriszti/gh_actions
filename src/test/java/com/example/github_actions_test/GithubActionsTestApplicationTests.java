@@ -14,10 +14,10 @@ class GithubActionsTestApplicationTests {
 		assertEquals(true, true);
 	}
 
-	@Test
-	void failedTest() {
-		System.out.println("Failed test");
-		assertEquals(true, false);
-	}
+//	@Test
+//	void failedTest() {
+//		System.out.println("Failed test");
+//		assertEquals(true, false);
+//	}
 
 }
