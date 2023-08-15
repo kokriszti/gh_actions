@@ -48,7 +48,7 @@ jobs:
     steps:
       - name: Notify teams
         run: |
-          text='{"text":"Test message"}'
+          text='{"text":"Longer test message to see how it looks. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin malesuada tortor est, sit amet ultrices neque tempor eget. Aenean nec ipsum odio. Pellentesque dapibus justo odio, pretium auctor mauris varius quis. Donec pulvinar pulvinar turpis egestas varius. Also contains link: https://prog.hu/hirek/6518/chatgpt-generalt-kod-hibas-programozas-felmeres"}'
           echo $text > test.txt
           curl ${{secrets.TEAMS_WEBHOOK_URI_NTT}} -X POST -H 'Content-type: application/json' --data "@test.txt"
 
