@@ -22,27 +22,34 @@ jobs:
 #        run: |
 #          echo "This job is supposed to fail but workflow run should still be successful."
 #          dksjfhkd
-  try-step-outcomes:
+#  try-step-outcomes:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Successful step
+#        id: successful-step
+#        run: echo "Successful step"
+#      - name: Evaluate Successful step's success
+#        if: steps.successful-step.outcome == 'success'
+#        run: echo "Successful step's success outcome properly detected"
+#      - name: Evaluate Successful step's failure
+#        if: steps.successful-step.outcome == 'failure'
+#        run: echo "If this is printed step outcome of Successful step wasn't detected properly!"
+#      - name: Failed step
+#        id: failed-step
+#        run: sdkfljsdf
+#      - name: Evaluate Failed step's success
+#        if: always() && steps.failed-step.outcome == 'success'
+#        run: echo "If this is printed step outcome of Failed step wasn't detected properly!"
+#      - name: Evaluate Failed step's failure
+#        if: always() && steps.failed-step.outcome == 'failure'
+#        run: echo "Failed step's failure outcome properly detected."
+  notify-teams:
     runs-on: ubuntu-latest
     steps:
-      - name: Successful step
-        id: successful-step
-        run: echo "Successful step"
-      - name: Evaluate Successful step's success
-        if: steps.successful-step.outcome == 'success'
-        run: echo "Successful step's success outcome properly detected"
-      - name: Evaluate Successful step's failure
-        if: steps.successful-step.outcome == 'failure'
-        run: echo "If this is printed step outcome of Successful step wasn't detected properly!"
-      - name: Failed step
-        id: failed-step
-        run: sdkfljsdf
-      - name: Evaluate Failed step's success
-        if: always() && steps.failed-step.outcome == 'success'
-        run: echo "If this is printed step outcome of Failed step wasn't detected properly!"
-      - name: Evaluate Failed step's failure
-        if: always() && steps.failed-step.outcome == 'failure'
-        run: echo "Failed step's failure outcome properly detected."
+      - name: Notify teams
+        run: |
+          curl ${{secrets.TEAMS_WEBHOOK_URI_NTT}} -X POST -H 'Content-type: application/json' --data "Test message"
+
   test:
     if: false # disabled for now
     runs-on: ubuntu-latest
