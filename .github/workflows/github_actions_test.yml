@@ -29,19 +29,19 @@ jobs:
         id: successful-step
         run: echo "Successful step"
       - name: Evaluate Successful step's success
-        if: step.successful-step.outcome == 'success'
+        if: steps.successful-step.outcome == 'success'
         run: echo "Successful step's success outcome properly detected"
       - name: Evaluate Successful step's failure
-        if: step.successful-step.outcome == 'failure'
+        if: steps.successful-step.outcome == 'failure'
         run: echo "If this is printed step outcome of Successful step wasn't detected properly!"
       - name: Failed step
         id: failed-step
         run: sdkfljsdf
       - name: Evaluate Failed step's success
-        if: step.failed-step.outcome == 'success'
+        if: steps.failed-step.outcome == 'success'
         run: echo "If this is printed step outcome of Failed step wasn't detected properly!"
       - name: Evaluate Failed step's failure
-        if: step.failed-step.outcome == 'failure'
+        if: steps.failed-step.outcome == 'failure'
         run: echo "Failed step's failure outcome properly detected."
   test:
     if: false # disabled for now
