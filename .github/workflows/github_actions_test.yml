@@ -38,10 +38,10 @@ jobs:
         id: failed-step
         run: sdkfljsdf
       - name: Evaluate Failed step's success
-        if: steps.failed-step.outcome == 'success'
+        if: always() && steps.failed-step.outcome == 'success'
         run: echo "If this is printed step outcome of Failed step wasn't detected properly!"
       - name: Evaluate Failed step's failure
-        if: steps.failed-step.outcome == 'failure'
+        if: always() && steps.failed-step.outcome == 'failure'
         run: echo "Failed step's failure outcome properly detected."
   test:
     if: false # disabled for now
