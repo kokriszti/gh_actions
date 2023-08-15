@@ -48,7 +48,9 @@ jobs:
     steps:
       - name: Notify teams
         run: |
-          curl ${{secrets.TEAMS_WEBHOOK_URI_NTT}} -X POST -H 'Content-type: application/json' --data "Test message"
+          text='{"text":"Test message"}'
+          echo $text > test.txt
+          curl ${{secrets.TEAMS_WEBHOOK_URI_NTT}} -X POST -H 'Content-type: application/json' --data "@test.txt"
 
   test:
     if: false # disabled for now
