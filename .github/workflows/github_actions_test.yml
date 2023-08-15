@@ -48,10 +48,9 @@ jobs:
     steps:
       - name: Notify teams
         run: |
-          text='{"text":"Test message that tries to reference the workflow link: https://github.com/kokriszti/gh_actions/actions/runs/${{ github.run_id }} . Aenean nec ipsum odio. Pellentesque dapibus justo odio, pretium auctor mauris varius quis. Donec pulvinar pulvinar turpis egestas varius. Also contains link: https://prog.hu/hirek/6518/chatgpt-generalt-kod-hibas-programozas-felmeres"}'
+          text='{"text":"DB clean-up for integration tests failed in the following workflow run: https://github.com/kokriszti/gh_actions/actions/runs/${{ github.run_id }} on stage dev/int (to be picked up from input data). Test data must be deleted manually from the database. Follow steps described in (link to be replaced with Confluence page): https://prog.hu/hirek/6518/chatgpt-generalt-kod-hibas-programozas-felmeres"}'
           echo $text > test.txt
-          cat test.txt
-#          curl ${{secrets.TEAMS_WEBHOOK_URI_NTT}} -X POST -H 'Content-type: application/json' --data "@test.txt"
+          curl ${{secrets.TEAMS_WEBHOOK_URI_NTT}} -X POST -H 'Content-type: application/json' --data "@test.txt"
 
   test:
     if: false # disabled for now
