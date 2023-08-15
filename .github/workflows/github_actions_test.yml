@@ -44,14 +44,11 @@ jobs:
 #        if: always() && steps.failed-step.outcome == 'failure'
 #        run: echo "Failed step's failure outcome properly detected."
   notify-teams:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Notify teams
-        run: |
-          text='{"text":"DB clean-up for integration tests failed in the following workflow run: https://github.com/kokriszti/gh_actions/actions/runs/${{ github.run_id }} on stage dev/int (to be picked up from input data). Test data must be deleted manually from the database. Follow steps described in (link to be replaced with Confluence page): https://prog.hu/hirek/6518/chatgpt-generalt-kod-hibas-programozas-felmeres"}'
-          echo $text > test.txt
-          curl ${{secrets.TEAMS_WEBHOOK_URI_NTT}} -X POST -H 'Content-type: application/json' --data "@test.txt"
-
+    uses: ./.github/workflows/reusable_notify_teams.yml
+    with:
+      stage: dev
+    secrets:
+        TEAMS_WEBHOOK_URI_NTT: ${{secrets.TEAMS_WEBHOOK_URI_NTT}}
   test:
     if: false # disabled for now
     runs-on: ubuntu-latest
