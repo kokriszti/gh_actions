@@ -22,7 +22,27 @@ jobs:
 #        run: |
 #          echo "This job is supposed to fail but workflow run should still be successful."
 #          dksjfhkd
+  try-step-outputs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Step with output
+        id: step-with-output
+        run: |
+          if [ -e test.txt ]; then
+            echo "FILE_PRESENT=1" >> "$GITHUB_OUTPUT"
+          else
+            echo "FILE_PRESENT=0" >> "$GITHUB_OUTPUT"         
+          fi
+      - name: Evaluate output 1
+        id: evaluate-output-1
+        if: ${{steps.step-with-output.outputs.FILE_PRESENT}} == 1
+        run: echo "File is present"
+      - name: Evaluate output 2
+        id: evaluate-output-2
+        if: ${{steps.step-with-output.outputs.FILE_PRESENT}} == 0
+        run: echo "File is not present"
   try-step-outcomes:
+    if: false # disabled for now
     runs-on: ubuntu-latest
     steps:
       - name: Successful step
