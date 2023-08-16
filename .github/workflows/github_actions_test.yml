@@ -41,7 +41,7 @@ jobs:
         if: success() || failure()
         run: echo "This line should be printed"
       - name: Important step following success/failure condition
-        if: success() || failure()
+        if: failure()
         run: echo "This line should be printed"
       - name: One more step to be sure
         run: echo "This line should be printed"
