@@ -37,8 +37,8 @@ jobs:
           else
             echo "FILE_PRESENT=0" >> "$GITHUB_OUTPUT"         
           fi
-      - name: Show files
-        run: ls -la
+      - name: Failed step
+        run: dgsdfgdfg
       - name: Print step output
         run: echo ${{steps.step-with-output.outputs.FILE_PRESENT}}
       - name: Evaluate output 1
