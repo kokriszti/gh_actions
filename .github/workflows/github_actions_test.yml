@@ -29,7 +29,10 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
+      - name: Failed step
+        run: dgsdfgdfg
       - name: Step with output
+        if: failure()
         id: step-with-output
         run: |
           if [ -e test.txt ]; then
@@ -37,17 +40,16 @@ jobs:
           else
             echo "FILE_PRESENT=0" >> "$GITHUB_OUTPUT"         
           fi
-      - name: Failed step
-        run: dgsdfgdfg
       - name: Print step output
+        if: failure()
         run: echo ${{steps.step-with-output.outputs.FILE_PRESENT}}
       - name: Evaluate output 1
         id: evaluate-output-1
-        if: steps.step-with-output.outputs.FILE_PRESENT == 1
+        if: failure() && steps.step-with-output.outputs.FILE_PRESENT == 1
         run: echo "File is present"
       - name: Evaluate output 2
         id: evaluate-output-2
-        if: steps.step-with-output.outputs.FILE_PRESENT == 0
+        if: failure() && steps.step-with-output.outputs.FILE_PRESENT == 0
         run: echo "File is not present"
   try-step-outcomes:
     if: false # disabled for now
