@@ -35,11 +35,11 @@ jobs:
           fi
       - name: Evaluate output 1
         id: evaluate-output-1
-        if: ${{steps.step-with-output.outputs.FILE_PRESENT}} == '1'
+        if: steps.step-with-output.outputs.FILE_PRESENT == '1'
         run: echo "File is present"
       - name: Evaluate output 2
         id: evaluate-output-2
-        if: ${{steps.step-with-output.outputs.FILE_PRESENT}} == '0'
+        if: steps.step-with-output.outputs.FILE_PRESENT == '0'
         run: echo "File is not present"
   try-step-outcomes:
     if: false # disabled for now
