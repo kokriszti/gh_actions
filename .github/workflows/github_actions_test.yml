@@ -176,17 +176,14 @@ jobs:
       - name: docker-push
         run:
           docker push kokriszti/github-actions-test:${{ steps.define-next-version.outputs.NEXT_VERSION }}
-  re-tag-docker-image:
-    runs-on: ubuntu-latest
-    needs: docker
-    steps:
-      - name: docker-tag
+      - name: docker-re-tag
         run: |
-          echo "Re-tagging image ${{ needs.docker.outputs.next-version }} with tag re-tagged"
-          docker tag kokriszti/github-actions-test:${{ needs.docker.outputs.next-version }} kokriszti/github-actions-test:re-tagged
-      - name: docker-push
+          echo "Re-tagging image ${{ steps.define-next-version.outputs.next-version }} with tag re-tagged"
+          docker tag kokriszti/github-actions-test:${{ steps.define-next-version.outputs.next-version }} kokriszti/github-actions-test:re-tagged
+      - name: docker-push-re-tagged
         run:
           docker push kokriszti/github-actions-test:re-tagged
+
 
 
 
