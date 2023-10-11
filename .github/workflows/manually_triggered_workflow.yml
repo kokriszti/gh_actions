@@ -1,5 +1,17 @@
 name: Test manually triggered workflow
-on: workflow_dispatch
+on:
+  workflow_dispatch:
+    inputs:
+      stage:
+        description: 'Environment to run the tests on'
+        required: true
+        type: choice
+        options:
+          - DEV
+          - INT
+      checkbox-test:
+        description: "Run second step"
+        type: boolean
 
 jobs:
   echo:
@@ -9,4 +21,10 @@ jobs:
         id: echo-it-works
         run: |
           echo "manually triggered workflow works"
+        shell: bash
+      - name: conditional step
+        id: conditional-step
+        if: ${{ inputs.checkbox-test}}
+        run: |
+          echo "Checkbox was ticked, running conditional step "
         shell: bash
