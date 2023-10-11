@@ -1,7 +1,7 @@
 #! /usr/bin/bash
 
 tags=($(git tag))
-echo "${tags[@]}"
+echo Git tags: "${tags[@]}"
 
 pattern="^([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})$"
 matchingTags=()
@@ -15,7 +15,7 @@ do
     fi
 done
 
-echo Matching tags: "${matchingTags[@]}"
+echo Tags matching regex pattern: "${matchingTags[@]}"
 
 highestGitTag=0.0.0
 
@@ -66,11 +66,11 @@ if [ $majorFromGit -eq $majorFromFile ] && [ $minorFromGit -eq $minorFromFile ]
 then
   newPatch=$(( $patchFromGit+1 ))
   newTag=$majorFromGit.$minorFromGit.$newPatch
-  echo "Matching tag found -> incrementing patch version: $newTag"
+  echo "Git tag maches file version -> incrementing patch version: $newTag"
 else
   newTag=$majorFromFile.$minorFromFile.0
-  echo "No matching tag found -> defaulting to patch zero: $newTag"
+  echo "Git tag doesn't match file version -> defaulting to patch zero: $newTag"
 fi
 
-git tag $newTag
-git push origin $newTag
+#git tag $newTag
+#git push origin $newTag

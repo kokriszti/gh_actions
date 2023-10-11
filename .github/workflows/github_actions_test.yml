@@ -23,8 +23,10 @@ jobs:
 #          echo "This job is supposed to fail but workflow run should still be successful."
 #          dksjfhkd
   try-step-outputs:
+    if: false # disabled for now
     runs-on: ubuntu-latest
     steps:
+      -
 #      - name: Checkout
 #        uses: actions/checkout@v3
 #        with:
@@ -135,8 +137,9 @@ jobs:
           echo "- Lets add a second bullet point" >> $GITHUB_STEP_SUMMARY
           echo "- How about a third one?" >> $GITHUB_STEP_SUMMARY
   docker:
-    if: false # disabled for now
     runs-on: ubuntu-latest
+    outputs:
+      next-version: ${{ steps.define-next-version.outputs.NEXT_VERSION }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -166,14 +169,26 @@ jobs:
           echo "$DOCKER_PASSWORD" | docker login --username $DOCKER_USER --password-stdin
       - name: docker-build
         run:
-          docker build --build-arg JAR_PATH=target -t github-actions-test:${{ steps.define-next-version.outputs.NEXT_VERSION }} .
-      - name: docker-tag
-        run: |
-          echo "The next tag is: ${{ steps.define-next-version.outputs.NEXT_VERSION }}"
-          docker tag github-actions-test:${{ steps.define-next-version.outputs.NEXT_VERSION }} kokriszti/github-actions-test:${{ steps.define-next-version.outputs.NEXT_VERSION }}
+          docker build --build-arg JAR_PATH=target -t kokriszti/github-actions-test:${{ steps.define-next-version.outputs.NEXT_VERSION }} .
+#      - name: docker-tag
+#        run: |
+#          echo "The next tag is: ${{ steps.define-next-version.outputs.NEXT_VERSION }}"
+#          docker tag github-actions-test:${{ steps.define-next-version.outputs.NEXT_VERSION }} kokriszti/github-actions-test:${{ steps.define-next-version.outputs.NEXT_VERSION }}
       - name: docker-push
         run:
           docker push kokriszti/github-actions-test:${{ steps.define-next-version.outputs.NEXT_VERSION }}
+  re-tag-docker-image:
+    runs-on: ubuntu-latest
+    needs: docker
+    steps:
+      - name: docker-tag
+        run: |
+          echo "Re-tagging image ${{ needs.docker.outputs.next-version }} with tag re-tagged"
+          docker tag kokriszti/github-actions-test:${{ needs.docker.outputs.next-version }} kokriszti/github-actions-test:re-tagged
+      - name: docker-push
+        run:
+          docker push kokriszti/github-actions-test:re-tagged
+
 
 
 
