@@ -72,8 +72,8 @@ else
   echo "No matching tag found -> defaulting to patch zero: $newTag"
 fi
 
-#git tag $newTag
+git tag $newTag
 ##TODO: ha tag sikeres a runner-en, de push elhasal?
-#git push origin $newTag
+git push origin $newTag
 
 echo "NEXT_VERSION=$newTag" >> $GITHUB_OUTPUT
