@@ -16,6 +16,7 @@ on:
 jobs:
   echo:
     runs-on: ubuntu-latest
+    if: ${{ github.event.inputs.stage == 'DEV' }}
     steps:
       - name: echo it works
         id: echo-it-works
@@ -27,4 +28,13 @@ jobs:
         if: ${{ inputs.checkbox-test}}
         run: |
           echo "Checkbox was ticked, running conditional step "
+        shell: bash
+  job-for-INT:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.inputs.stage == 'INT' }}
+    steps:
+      - name: echo it works
+        id: echo-it-works
+        run: |
+          echo "triggered for int"
         shell: bash
