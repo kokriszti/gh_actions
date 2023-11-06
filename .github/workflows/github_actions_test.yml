@@ -60,16 +60,20 @@ jobs:
         run: echo "Successful step"
       - name: Evaluate Successful step's success
         if: steps.successful-step.outcome == 'success'
-        run: echo "Successful step's success outcome properly detected"
+        run: |
+          sleep 5
+          echo "Successful step's success outcome properly detected"
       - name: Evaluate Successful step's failure
         if: steps.successful-step.outcome == 'failure'
         run: echo "If this is printed step outcome of Successful step wasn't detected properly!"
-      - name: Failed step
-        id: failed-step
-        run: sdkfljsdf
+#      - name: Failed step
+#        id: failed-step
+#        run: sdkfljsdf
       - name: Step following failed step
         if: success() || failure()
-        run: echo "This line should be printed"
+        run: |
+          sleep 5
+          echo "This line should be printed"
       - name: Important step following success/failure condition
         if: failure()
         run: echo "This line should be printed"
