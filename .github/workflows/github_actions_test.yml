@@ -81,6 +81,9 @@ jobs:
         run: |
           sleep 10
           echo "This line should be printed"
+      - name: Reaction to workflow cancellation
+        if: cancelled()
+        run: echo "The workflow was cancelled and this line is printed as a reaction"
   #      - name: Evaluate Failed step's success
 #        if: always() && steps.failed-step.outcome == 'success'
 #        run: echo "If this is printed step outcome of Failed step wasn't detected properly!"
