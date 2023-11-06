@@ -98,6 +98,14 @@ jobs:
 #      - name: Evaluate Failed step's failure
 #        if: always() && steps.failed-step.outcome == 'failure'
 #        run: echo "Failed step's failure outcome properly detected."
+  job-for-testing-purposes-remove-this-later:
+    runs-on: ubuntu-latest
+    needs: try-step-outcomes
+    steps:
+      - name: Sleep 15 seconds pretending something is being done
+        run: |
+          sleep 15
+          echo "Ready to proceed"
   notify-teams:
     if: false # disabled for now
     uses: ./.github/workflows/reusable_notify_teams.yml
