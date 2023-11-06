@@ -53,7 +53,6 @@ jobs:
         if: failure() && steps.step-with-output.outputs.FILE_PRESENT == 0
         run: echo "File is not present"
   try-step-outcomes:
-    if: false # disabled for now
     runs-on: ubuntu-latest
     steps:
       - name: Successful step
