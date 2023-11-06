@@ -52,16 +52,9 @@ jobs:
         id: evaluate-output-2
         if: failure() && steps.step-with-output.outputs.FILE_PRESENT == 0
         run: echo "File is not present"
-  just-an-additional-job:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Sleep 15 seconds pretending something is being done
-        run: |
-          sleep 15
-          echo "Ready to proceed"
   try-step-outcomes:
     runs-on: ubuntu-latest
-    needs: just-an-additional-job
+    if: false # disabled for now
     steps:
       - name: Successful step
         id: successful-step
@@ -79,16 +72,12 @@ jobs:
 #        run: sdkfljsdf
       - name: Step following failed step
         if: success() || failure()
-        run: |
-          sleep 5
-          echo "This line should be printed"
+        run: echo "This line should be printed"
       - name: Important step following success/failure condition
         if: failure()
         run: echo "This line should be printed"
       - name: One more step to be sure
-        run: |
-          sleep 10
-          echo "This line should be printed"
+        run: echo "This line should be printed"
       - name: Reaction to workflow cancellation
         if: cancelled()
         run: echo "The workflow was cancelled and this line is printed as a reaction"
@@ -98,16 +87,7 @@ jobs:
 #      - name: Evaluate Failed step's failure
 #        if: always() && steps.failed-step.outcome == 'failure'
 #        run: echo "Failed step's failure outcome properly detected."
-  job-for-testing-purposes-remove-this-later:
-    runs-on: ubuntu-latest
-    needs: try-step-outcomes
-    steps:
-      - name: Sleep 15 seconds pretending something is being done
-        run: |
-          sleep 15
-          echo "Ready to proceed"
   notify-teams:
-    if: false # disabled for now
     uses: ./.github/workflows/reusable_notify_teams.yml
     with:
       stage: dev

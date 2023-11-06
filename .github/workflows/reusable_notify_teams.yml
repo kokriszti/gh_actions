@@ -16,5 +16,5 @@ jobs:
       - name: Send notification
         run: |
           text='{"text":"DB clean-up for integration tests failed in the following workflow run: https://github.com/kokriszti/gh_actions/actions/runs/${{ github.run_id }} on stage ${{inputs.stage}}. Test data must be deleted manually from the ${{inputs.stage}} database. Follow steps described in (link to be replaced with Confluence page): https://prog.hu/hirek/6518/chatgpt-generalt-kod-hibas-programozas-felmeres"}'
-          echo $text > test.txt
-          curl ${{secrets.TEAMS_WEBHOOK_URI_NTT}} -X POST -H 'Content-type: application/json' --data "@test.txt"
+          echo $text > file_name_with_underscore.txt
+          curl ${{secrets.TEAMS_WEBHOOK_URI_NTT}} -X POST -H 'Content-type: application/json' --data "@file_name_with_underscore.txt"
