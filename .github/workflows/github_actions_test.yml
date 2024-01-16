@@ -1,12 +1,12 @@
 name: Test CI/CD pipeline
 on:
-  push:
-    branches:
-      - main
-      - 'feature/**'
-    paths-ignore:
-      - 'README.md'
-      - '.gitignore'
+#  push:
+#    branches:
+#      - main
+#      - 'feature/**'
+#    paths-ignore:
+#      - 'README.md'
+#      - '.gitignore'
   pull_request:
     branches:
       - main

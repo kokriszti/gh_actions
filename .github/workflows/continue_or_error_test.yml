@@ -22,7 +22,7 @@ jobs:
         run: dlkfjlkdsfj
   success_2:
     needs: [ success_1,  failure]
-#    if: always() && needs.build.result == 'success' && needs.create-db-secrets.result == 'success'
+    if: always() && needs.success_1 .result == 'success'
     runs-on: ubuntu-latest
     steps:
       - name: Print line
