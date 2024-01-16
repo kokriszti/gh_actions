@@ -29,6 +29,7 @@ jobs:
         run: echo "successful_1"
   success_3:
     needs: [ success_1,  failure, success_2]
+    if: always() && needs.success_1 .result == 'success' && needs.success_2 .result == 'success'
     runs-on: ubuntu-latest
     steps:
       - name: Print line
