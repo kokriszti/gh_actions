@@ -36,12 +36,14 @@ jobs:
         run: echo "successful_1"
   success_4:
     needs: [ success_1,  failure, success_2, success_3 ]
+    if: always() && needs.success_3 .result == 'success'
     runs-on: ubuntu-latest
     steps:
       - name: Print line
         run: echo "successful_1"
   success_5:
     needs: [ success_1,  failure, success_2, success_3, success_4 ]
+    if: always() && needs.success_4 .result == 'success'
     runs-on: ubuntu-latest
     steps:
       - name: Print line
