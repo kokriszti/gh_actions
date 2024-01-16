@@ -1,0 +1,47 @@
+name: Test continue-on-error property
+on:
+  push:
+    branches:
+      - main
+      - 'feature/**'
+    paths-ignore:
+      - 'README.md'
+      - '.gitignore'
+
+jobs:
+  success_1:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print line
+        run: echo "successful_1"
+  failure:
+    needs: [ success_1 ]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print line
+        run: dlkfjlkdsfj
+  success_2:
+    needs: [ success_1,  failure]
+#    if: always() && needs.build.result == 'success' && needs.create-db-secrets.result == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print line
+        run: echo "successful_1"
+  success_3:
+    needs: [ success_1,  failure, success_2]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print line
+        run: echo "successful_1"
+  success_4:
+    needs: [ success_1,  failure, success_2, success_3 ]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print line
+        run: echo "successful_1"
+  success_5:
+    needs: [ success_1,  failure, success_2, success_3, success_4 ]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print line
+        run: echo "successful_1"
