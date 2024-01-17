@@ -1,0 +1,3 @@
+tag: %TAG%
+app name: %APP%
+stage: %STAGE%
