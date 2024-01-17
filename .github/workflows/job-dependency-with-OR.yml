@@ -2,8 +2,7 @@ name: Test continue-on-error property
 on:
   push:
     branches:
-#      - main
-      - 'feature/**'
+      - main
     paths-ignore:
       - 'README.md'
       - '.gitignore'
@@ -14,33 +13,19 @@ jobs:
     steps:
       - name: Print line
         run: echo "success"
-  failure:
-    needs: [ success_1 ]
-    runs-on: ubuntu-latest
-    continue-on-error: true
-    steps:
-      - name: Print line
-        run: dlkfjlkdsfj
   success_2:
-    needs: [ success_1,  failure]
     runs-on: ubuntu-latest
     steps:
       - name: Print line
         run: echo "success"
   success_3:
-    needs: [ success_2]
     runs-on: ubuntu-latest
     steps:
       - name: Print line
         run: fghfg
   success_4:
-    needs: [ success_3 ]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Print line
-        run: echo "success"
-  success_5:
-    needs: [ success_4 ]
+    needs: [ success_1,success_2,success_3 ]
+    if: always() && (needs.success_1.result == 'success' || needssuccess_2.result == 'success' || needs.success_3.result == 'success')
     runs-on: ubuntu-latest
     steps:
       - name: Print line
