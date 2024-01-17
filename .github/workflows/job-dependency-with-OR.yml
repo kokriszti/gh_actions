@@ -2,7 +2,8 @@ name: Test continue-on-error property
 on:
   push:
     branches:
-      - main
+#      - main
+      - 'feature/**'
     paths-ignore:
       - 'README.md'
       - '.gitignore'

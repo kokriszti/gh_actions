@@ -1,0 +1,22 @@
+name: Test continue-on-error property
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - 'README.md'
+      - '.gitignore'
+
+jobs:
+  execute-flyway:
+    runs-on: ubuntu-latest
+    steps:
+      - name: replace with sed
+        run: |
+          cd kubernetes
+          cat flyway.txt
+          echo "Using tag manual for deployment"
+          sed -i 's/%APP%/myapp-backend/g' flyway.txt
+          sed -i 's/%TAG%/manual/g' flyway.txt
+          sed -i 's/%STAGE%/dev/g' flyway.txt
+          cat flyway.txt
