@@ -25,7 +25,7 @@ jobs:
         run: fghfg
   success_4:
     needs: [ success_1,success_2,success_3 ]
-    if: always() && (needs.success_1.result == 'success' || needssuccess_2.result == 'success' || needs.success_3.result == 'success')
+    if: always() && (needs.success_1.result == 'success' || needs.success_2.result == 'success' || needs.success_3.result == 'success')
     runs-on: ubuntu-latest
     steps:
       - name: Print line
