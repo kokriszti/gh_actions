@@ -36,14 +36,14 @@ jobs:
           sed -i 's/%STAGE%/dev/g' flyway.txt
           cat flyway.txt
       - name: Apply - dev
-        if: always() && ${{ github.event.inputs.stage == 'DEV' }}
+        if: ${{ github.event.inputs.stage == 'DEV' }}
         run: |
           echo "Deploying to dev..."
       - name: Apply - int
-        if: always() && ${{ github.event.inputs.stage == 'INT' }}
+        if: ${{ github.event.inputs.stage == 'INT' }}
         run: |
           echo "Deploying to int..."
       - name: Appy to cluster - prod
-        if: always() && ${{ github.event.inputs.stage == 'PROD' }}
+        if: ${{ github.event.inputs.stage == 'PROD' }}
         run: |
           echo "Deploying to prod..."
