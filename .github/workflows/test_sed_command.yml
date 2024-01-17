@@ -1,4 +1,4 @@
-name: Test continue-on-error property
+name: Test conditional steps in manual
 on:
   workflow_dispatch:
     inputs:
